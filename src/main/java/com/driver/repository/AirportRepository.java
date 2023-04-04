@@ -66,7 +66,7 @@ public class AirportRepository {
         for(Flight flight : flightDB.values()) {
             String fromCity = flight.getFromCity().toString();
             String toCity = flight.getToCity().toString();
-            if(flight.getFlightDate().compareTo(date) == 0 && fromCity.equals(airportName) || toCity.equals(airportName)) {
+            if(flight.getFlightDate().compareTo(date) == 0 && (fromCity.equals(airportName) || toCity.equals(airportName))) {
                 totalPeople += flightPassengerDB.get(flight.getFlightId()).size();
             }
         }
@@ -142,19 +142,13 @@ public class AirportRepository {
         City fromCity = flightDB.get(flightId).getFromCity();
         for(Airport airport : airportDB.values()) {
             if (airport.getCity().equals(fromCity)) {
-                return fromCity.toString();
+                return airport.getAirportName();
             }
         }
         return null;
     }
 
     public int calculateRevenueOfAFlight(Integer flightId){
-//        int noOfPeopleBooked = flightPassengerDB.get(flightId).size();
-//        int variableFare = (noOfPeopleBooked*(noOfPeopleBooked+1))*25;
-//        int fixedFare = 3000*noOfPeopleBooked;
-//        int totalFare = variableFare + fixedFare;
-//
-//        return totalFare;
         int totalRevenue = 0;
         if(flightDB.containsKey(flightId)) {
             Set<Integer> passengers = flightPassengerDB.get(flightId);
@@ -171,11 +165,3 @@ public class AirportRepository {
     }
 }
 
-//TestCases.testBookAFlight:114 » NullPointer
-//        Error:    TestCases.testBookAFlightWhenPassengerAlreadyThere:128 » NullPointer
-//        Error:    TestCases.testCalculateFlightFare:100 » NullPointer
-//        Error:    TestCases.testCalculateRevenueOfAFlight:202 » NullPointer
-//        Error:    TestCases.testCancelATicket:143 » NullPointer
-//        Error:    TestCases.testCancelATicketWhenTicketDoesntExist:158 » NullPointer
-//        Error:    TestCases.testCountOfBookingsDoneByPassengerAllCombined:222 » NullPointer
-//        Error:    TestCases.testGetNumberOfPeopleOn:76 » NullPointer
