@@ -15,7 +15,6 @@ public class AirportRepository {
     HashMap<Integer, Flight> flightDB;
     HashMap<Integer, Passenger> passengerDB;
     HashMap<Integer, Set<Integer>> flightPassengerDB; // key: flightID, values: set of passengerIDs
-//    HashMap<Integer, Set<Integer>> passengerFlightDB; // key: passengerID, values: set of flightIDs
 
     public AirportRepository() {
         this.airportDB = new HashMap<>();
