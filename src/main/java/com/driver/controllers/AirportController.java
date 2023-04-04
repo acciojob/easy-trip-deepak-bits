@@ -227,12 +227,20 @@ public class AirportController {
     @GetMapping("/calculate-revenue-collected/{flightId}")
     public int calculateRevenueOfAFlight(@PathVariable("flightId")Integer flightId){
 
-        int noOfPeopleBooked = flightToPassengerDb.get(flightId).size();
-        int variableFare = (noOfPeopleBooked*(noOfPeopleBooked+1))*25;
-        int fixedFare = 3000*noOfPeopleBooked;
-        int totalFare = variableFare + fixedFare;
-
-        return totalFare;
+//        int noOfPeopleBooked = flightToPassengerDb.get(flightId).size();
+//        int variableFare = (noOfPeopleBooked*(noOfPeopleBooked+1))*25;
+//        int fixedFare = 3000*noOfPeopleBooked;
+//        int totalFare = variableFare + fixedFare;
+//
+//        return totalFare;
+        int totalRevenue = 0;
+        if(flightDb.containsKey(flightId)) {
+            List<Integer> passengers = flightToPassengerDb.get(flightId);
+            for(int i = 0; i < passengers.size(); i++) {
+                totalRevenue += (3000 + (i*50));
+            }
+        }
+        return totalRevenue;
     }
 
 
