@@ -30,13 +30,19 @@ public class AirportRepository {
     }
 
     public String getLargestAirportName(){
-        // Convert the HashMap values to a List and sort it using the compareTo method
-        List<Airport> sortedAirports = new ArrayList<>(airportDB.values());
-        Collections.sort(sortedAirports);
-
-        // Get the largest airport (i.e., first element of the sorted list)
-        Airport largestAirport = sortedAirports.get(0);
-        return largestAirport.getAirportName();
+        String ans = "";
+        int terminals = 0;
+        for(Airport airport : airportDB.values()) {
+            if(airport.getNoOfTerminals() > terminals) {
+                ans = airport.getAirportName();
+                terminals = airport.getNoOfTerminals();
+            } else if(airport.getNoOfTerminals() == terminals) {
+                if(airport.getAirportName().compareTo(ans) < 0) {
+                    ans = airport.getAirportName();
+                }
+            }
+        }
+        return ans;
     }
 
     public double getShortestDurationOfPossibleBetweenTwoCities(City fromCity, City toCity){
