@@ -84,13 +84,19 @@ public class AirportRepository {
     }
 
     public String bookATicket(Integer flightId,Integer passengerId){
-        Flight flight = flightDB.get(flightId);
-        Passenger passenger = passengerDB.get(passengerId);
-        if(Objects.isNull(flight) || Objects.isNull(passenger)) return "FAILURE";
+//        Flight flight = flightDB.get(flightId);
+//        Passenger passenger = passengerDB.get(passengerId);
+//        if(Objects.isNull(flight) || Objects.isNull(passenger)) return "FAILURE";
         if(!flightDB.containsKey(flightId)) {
             return "FAILURE";
         } else {
-            Set<Integer> passengers = flightPassengerDB.get(flightId);
+            Set<Integer> passengers;
+            if(Objects.isNull(flightPassengerDB.get(flightId))) {
+                passengers = new HashSet<>();
+            } else {
+                passengers = flightPassengerDB.get(flightId);
+            }
+
             int maxCapacity = flightDB.get(flightId).getMaxCapacity();
 
             if(!passengerDB.containsKey(passengerId) || passengers.size() >= maxCapacity || passengers.contains(passengerId)) {
@@ -108,7 +114,7 @@ public class AirportRepository {
             return "FAILURE";
         } else {
             Set<Integer> passengers = flightPassengerDB.get(flightId);
-            if(!passengerDB.containsKey(passengerId) || !passengers.contains(passengerId)) return "FAILURE";
+            if(passengers == null || !passengerDB.containsKey(passengerId) || !passengers.contains(passengerId)) return "FAILURE";
             else {
                 passengers.remove(passengerId);
                 flightPassengerDB.put(flightId, passengers);
