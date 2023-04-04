@@ -6,7 +6,7 @@ import com.driver.model.City;
 import com.driver.model.Flight;
 import com.driver.model.Passenger;
 import org.springframework.web.bind.annotation.*;
-import service.AirportService;
+import com.driver.service.AirportService;
 
 import java.util.Date;
 

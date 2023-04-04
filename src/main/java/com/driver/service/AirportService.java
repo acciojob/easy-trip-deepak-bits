@@ -1,4 +1,4 @@
-package service;
+package com.driver.service;
 
 import com.driver.model.Airport;
 import com.driver.model.City;
@@ -6,7 +6,7 @@ import com.driver.model.Flight;
 import com.driver.model.Passenger;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
-import repository.AirportRepository;
+import com.driver.repository.AirportRepository;
 
 import java.util.Date;
 

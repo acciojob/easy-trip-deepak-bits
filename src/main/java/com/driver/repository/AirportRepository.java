@@ -1,4 +1,4 @@
-package repository;
+package com.driver.repository;
 
 import com.driver.model.Airport;
 import com.driver.model.City;
@@ -76,7 +76,7 @@ public class AirportRepository {
             Set<Integer> passengers = flightPassengerDB.get(flightId);
             int maxCapacity = flightDB.get(flightId).getMaxCapacity();
 
-            if(passengers.size() > maxCapacity || passengers.contains(passengerId)) {
+            if(passengers.size() >= maxCapacity || passengers.contains(passengerId)) {
                 return "FAILURE";
             }
 
@@ -139,3 +139,12 @@ public class AirportRepository {
         passengerDB.put(passengerID, passenger);
     }
 }
+
+//TestCases.testBookAFlight:114 » NullPointer
+//        Error:    TestCases.testBookAFlightWhenPassengerAlreadyThere:128 » NullPointer
+//        Error:    TestCases.testCalculateFlightFare:100 » NullPointer
+//        Error:    TestCases.testCalculateRevenueOfAFlight:202 » NullPointer
+//        Error:    TestCases.testCancelATicket:143 » NullPointer
+//        Error:    TestCases.testCancelATicketWhenTicketDoesntExist:158 » NullPointer
+//        Error:    TestCases.testCountOfBookingsDoneByPassengerAllCombined:222 » NullPointer
+//        Error:    TestCases.testGetNumberOfPeopleOn:76 » NullPointer
