@@ -63,10 +63,11 @@ public class AirportRepository {
             return 0;
         }
         int totalPeople = 0;
+        City city = airport.getCity();
         for(Flight flight : flightDB.values()) {
-            String fromCity = flight.getFromCity().toString();
-            String toCity = flight.getToCity().toString();
-            if(flight.getFlightDate().compareTo(date) == 0 && (fromCity.equals(airportName) || toCity.equals(airportName))) {
+            City fromCity = flight.getFromCity();
+            City toCity = flight.getToCity();
+            if(flight.getFlightDate().equals(date) && (fromCity.equals(city) || toCity.equals(city))) {
                 totalPeople += flightPassengerDB.get(flight.getFlightId()).size();
             }
         }
