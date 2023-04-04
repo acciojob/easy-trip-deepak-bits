@@ -58,6 +58,10 @@ public class AirportRepository {
     }
 
     public int getNumberOfPeopleOn(Date date, String airportName){
+        Airport airport = airportDB.get(airportName);
+        if(Objects.isNull(airport)){
+            return 0;
+        }
         int totalPeople = 0;
         for(Flight flight : flightDB.values()) {
             String fromCity = flight.getFromCity().toString();
@@ -70,10 +74,13 @@ public class AirportRepository {
     }
 
     public int calculateFlightFare(Integer flightId){
-        Set<Integer> passengers = flightPassengerDB.get(flightId);
-        int existingCount = passengers.size();
+        if(flightDB.containsKey(flightId)) {
+            Set<Integer> passengers = flightPassengerDB.get(flightId);
+            int existingCount = passengers.size();
 
-        return 3000 + existingCount * 50;
+            return 3000 + existingCount * 50;
+        }
+        return 0;
     }
 
     public String bookATicket(Integer flightId,Integer passengerId){
@@ -83,7 +90,7 @@ public class AirportRepository {
             Set<Integer> passengers = flightPassengerDB.get(flightId);
             int maxCapacity = flightDB.get(flightId).getMaxCapacity();
 
-            if(passengers.size() >= maxCapacity || passengers.contains(passengerId)) {
+            if(!passengerDB.containsKey(passengerId) || passengers.size() >= maxCapacity || passengers.contains(passengerId)) {
                 return "FAILURE";
             }
 
@@ -94,11 +101,11 @@ public class AirportRepository {
     }
 
     public String cancelATicket(Integer flightId,Integer passengerId){
-        Set<Integer> passengers = flightPassengerDB.get(flightId);
         if(!flightDB.containsKey(flightId)) {
             return "FAILURE";
         } else {
-            if(!passengers.contains(passengerId)) return "FAILURE";
+            Set<Integer> passengers = flightPassengerDB.get(flightId);
+            if(!passengerDB.containsKey(passengerId) || !passengers.contains(passengerId)) return "FAILURE";
             else {
                 passengers.remove(passengerId);
                 flightPassengerDB.put(flightId, passengers);
@@ -133,10 +140,12 @@ public class AirportRepository {
     }
 
     public int calculateRevenueOfAFlight(Integer flightId){
-        Set<Integer> passengers = flightPassengerDB.get(flightId);
         int totalRevenue = 0;
-        for(int i = 0; i < passengers.size(); i++) {
-            totalRevenue += (3000 + (i*50));
+        if(flightDB.containsKey(flightId)) {
+            Set<Integer> passengers = flightPassengerDB.get(flightId);
+            for(int i = 0; i < passengers.size(); i++) {
+                totalRevenue += (3000 + (i*50));
+            }
         }
         return totalRevenue;
     }
